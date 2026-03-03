@@ -1,0 +1,26 @@
+<div class="m-2">
+    <h2 class="text-lg font-bold">{{recipe().name}}</h2>
+    <h3 class="text-sm italic">{{recipe().description}}</h3>
+    <div class="my-4 flex">
+        <button
+            class="mr-2 bg-white hover:bg-gray-800 text-black font-bold py-2 px-4 rounded-full border border-black"
+            (click)="servingsLess()">Servings -</button>
+        <button class="bg-white hover:bg-gray-800 text-black font-bold py-2 px-4 rounded-full border border-black"
+            (click)="servingsMore()">Servings +</button>
+    </div>
+    <div class="flex flex-col md:flex-row gap-2">
+        <div class="md:w-[50%] border-2 rounded-sm my-1 md:my-4 p-4 bg-[#C07495]">
+            <p>Ingredients: (Servings: {{servings()}})
+            </p>
+            <ul>
+                @for (item of adjustedIngredients(); track item.name) {
+                <li>{{ item.name }} - quantity: {{item.quantity}} unit: {{item.unit}}</li>
+                }
+            </ul>
+        </div>
+        <img class="md:w-[50%] border-2 rounded-sm md:my-4 bg-[#C07495]" [src]="recipe().imgUrl"
+            [alt]="recipe().name + 'image'" />
+    </div>
+
+
+</div>
