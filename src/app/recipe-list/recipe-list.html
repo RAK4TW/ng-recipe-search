@@ -1,9 +1,16 @@
 <app-recipe-detail [recipe]="recipe()" />
 <div class="p-2 -mt-2">
-    <button class="mr-2 bg-white hover:bg-gray-800 rounded-full text-black font-bold py-2 px-4 rounded border border-black"
-        (click)="prevRecipe()">Previous
-        Recipe</button>
-    <button class="mr-2 bg-white hover:bg-gray-800 rounded-full text-black font-bold py-2 px-4 rounded border border-black"
-    (click)="nextRecipe()">Next
-        Recipe</button>
+    <div class="flex flex-col md:flex-row gap-3 items-center">
+        <div class="flex-1 w-full">
+            <input [(ngModel)]="searchTerm" placeholder="Search recipes..." 
+                   class="w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200" />
+        </div>
+        
+        <div class="flex gap-2 w-full md:w-auto">
+            <button class="flex-1 md:flex-none cursor-pointer bg-white hover:bg-red-500 hover:text-white hover:border-black rounded-full text-black font-bold py-2 px-4 border border-red-500 transition-colors duration-200"
+                    (click)="prevRecipe()">Previous Recipe</button>
+            <button class="flex-1 md:flex-none cursor-pointer bg-white hover:bg-red-500 hover:text-white hover:border-black rounded-full text-black font-bold py-2 px-4 border border-red-500 transition-colors duration-200"
+                    (click)="nextRecipe()">Next Recipe</button>
+        </div>
+    </div>
 </div>

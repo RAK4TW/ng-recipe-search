@@ -1,24 +1,41 @@
 <div class="m-2">
-    <h2 class="text-lg font-bold">{{recipe().name}}</h2>
+    <div class="flex gap-2 items-center">
+        <h2 class="text-2xl font-bold">{{recipe().name}}</h2>
+        @if (recipe().isFavorite) {
+            <span class="bg-red-500 text-gray-800 px-2 py-0.5 rounded-full text-xs font-bold shadow-md drop-shadow-lg">★ Favorite</span>
+        }
+    </div>
     <h3 class="text-sm italic">{{recipe().description}}</h3>
-    <div class="my-4 flex">
+    <div class="mt-4 mb-2 flex">
         <button
-            class="mr-2 bg-white hover:bg-gray-800 text-black font-bold py-2 px-4 rounded-full border border-black"
+            class="cursor-pointer mr-2 bg-white hover:bg-red-500 hover:text-white hover:border-black text-black font-bold py-2 px-4 rounded-full border border-red-500"
             (click)="servingsLess()">Servings -</button>
-        <button class="bg-white hover:bg-gray-800 text-black font-bold py-2 px-4 rounded-full border border-black"
+        <button class="cursor-pointer bg-white hover:bg-red-500 hover:text-white hover:border-black text-black font-bold py-2 px-4 rounded-full border border-red-500"
             (click)="servingsMore()">Servings +</button>
     </div>
     <div class="flex flex-col md:flex-row gap-2">
-        <div class="md:w-[50%] border-2 rounded-sm my-1 md:my-4 p-4 bg-[#C07495]">
-            <p>Ingredients: (Servings: {{servings()}})
+        <div
+            class="md:w-[50%] border rounded-lg my-1 md:my-2 p-3 bg-linear-to-br from-yellow-400 to-red-500 shadow transform hover:scale-102 transition-transform duration-200 h-full">
+            <p class="text-sm mb-2 text-gray-800 font-bold tracking-wide">Ingredients: (Servings: {{servings()}})
             </p>
-            <ul>
+            <div class="flex flex-col gap-1">
                 @for (item of adjustedIngredients(); track item.name) {
-                <li>{{ item.name }} - quantity: {{item.quantity}} unit: {{item.unit}}</li>
+                <div
+                    class="bg-white/20 backdrop-blur-sm rounded p-1 border border-white/30 hover:bg-white/25 transition-all duration-200">
+                    <div class="flex items-center justify-between">
+                        <strong class="text-gray-800 font-bold text-sm">{{ item.name }}</strong>
+                        <div class="flex gap-2">
+                            <span
+                                class="bg-white text-red-500 px-2 py-0.5 rounded-full text-xs font-bold">{{item.quantity}}</span>
+                            <span
+                                class="bg-white/90 text-yellow-600 px-2 py-0.5 rounded-full text-xs font-bold">{{item.unit}}</span>
+                        </div>
+                    </div>
+                </div>
                 }
-            </ul>
+            </div>
         </div>
-        <img class="md:w-[50%] border-2 rounded-sm md:my-4 bg-[#C07495]" [src]="recipe().imgUrl"
+        <img class="md:w-[50%] border rounded-lg md:my-2 bg-yellow-100 h-full object-cover" [src]="recipe().imgUrl"
             [alt]="recipe().name + 'image'" />
     </div>
 
