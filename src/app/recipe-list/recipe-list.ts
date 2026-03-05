@@ -1,11 +1,11 @@
 import { Component, computed, signal, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MOCK_RECIPES } from '../mock-recipes';
-import { RecipeDetail } from "../recipe-detail/recipe-detail";
 import { Recipe } from '../recipe';
+import { RouterLink } from '@angular/router'
+
 @Component({
   selector: 'app-recipe-list',
-  imports: [RecipeDetail, FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './recipe-list.html',
   styleUrl: './recipe-list.css',
 })
@@ -29,15 +29,5 @@ export class RecipeList {
   })
 
 
-  protected prevRecipe(): void {
-    if (this.current() != 0) {
-      this.current.update(c => c - 1)
-    }
-  }
 
-  protected nextRecipe(): void {
-    if (this.current() != this.filteredRecipes().length - 1) {
-      this.current.update(c => c + 1);
-    }
-  }
 }
