@@ -28,6 +28,4 @@ export class RecipeList {
     return this.filteredRecipes()[this.current()] || this.filteredRecipes()[0]
   })
 
-
-
 }

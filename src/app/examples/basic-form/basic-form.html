@@ -1,0 +1,7 @@
+<form [formGroup]="contactForm" (ngSubmit)="sendMessage()">
+  <label>
+    Message:
+    <input type="text" formControlName="message">
+  </label>
+  <button type="submit">Send</button>
+</form>

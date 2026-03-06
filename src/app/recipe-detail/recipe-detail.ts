@@ -1,21 +1,19 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { Ingredient, RecipeModel } from '../models';
-import { ActivatedRoute } from '@angular/router';
+import { Component, computed, inject, input, signal } from '@angular/core';
+import { Ingredient, } from '../models';
+import { Router } from '@angular/router';
 import { Recipe } from '../recipe';
 
 @Component({
   selector: 'app-recipe-detail',
-  imports: [],
   templateUrl: './recipe-detail.html',
   styleUrl: './recipe-detail.css',
 })
 export class RecipeDetail {
+  private readonly router = inject(Router);
   protected recipesService = inject(Recipe);
-  private readonly route = inject(ActivatedRoute);
-  protected readonly recipeId = this.route.snapshot.params['id']
-
+  protected readonly id = input<string>();
   protected readonly recipe = computed(() => {
-    return this.recipesService.getRecipeById(Number(this.recipeId))
+    return this.recipesService.getRecipeById(Number(this.id()))
   })
 
   protected readonly servings = signal(1);
@@ -30,6 +28,20 @@ export class RecipeDetail {
     })
     return array;
   })
+  protected readonly currentIndex = computed(() => {
+    return this.recipesService.recipes().findIndex(r => r.id === Number(this.id()));
+  })
+
+  protected readonly prevId = computed(() => {
+    const index = this.currentIndex();
+    return index > 0 ? this.recipesService.recipes()[index - 1].id : null;
+  });
+
+  protected readonly nextId = computed(() => {
+    const index = this.currentIndex();
+    const recipes = this.recipesService.recipes();
+    return index !== -1 && index < recipes.length - 1 ? recipes[index + 1].id : null;
+  });
 
   protected servingsLess(): void {
     this.servings.update(s => s > 1 ? s - 1 : s)
@@ -39,15 +51,18 @@ export class RecipeDetail {
     this.servings.update(s => s + 1)
   }
 
-  // protected prevRecipe(): void {
-  //   if (this.recipe() != 0) {
-  //     this.current.update(c => c - 1)
-  //   }
-  // }
+  protected prevRecipe(): void {
+    const id = this.prevId();
+    if (id !== null) {
+      this.router.navigate(['/recipes', id]);
+    }
+  }
 
-  // protected nextRecipe(): void {
-  //   if (this.current() != this.recipesService.recipes.length - 1) {
-  //     this.current.update(c => c + 1);
-  //   }
-  // }
+  protected nextRecipe(): void {
+    const id = this.nextId();
+    if (id !== null) {
+      this.router.navigate(['/recipes', id]);
+    }
+  }
+
 }
