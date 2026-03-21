@@ -1,41 +1,39 @@
-<form class="flex flex-col justify-start" [formGroup]="addRecipeForm" (ngSubmit)="submitRecipe()">
-    <div class="grid"> 
+<form class="flex flex-col justify-start" (submit)="save();$event.preventDefault()">
+    <div class="grid">
         <label class="mt-2"><strong>Name</strong>
-            <input formControlName="name" type="text"
+            <input [formField]="addRecipeForm.name"type="text"
+                class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
+        </label>
+           <label class="mt-2"><strong>Email</strong>
+            <input [formField]="addRecipeForm.authorEmail"type="text"
                 class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
         </label>
         <label class="mt-2"><strong>Description</strong>
-            <textarea formControlName="description"  rows="2"
+            <textarea [formField]="addRecipeForm.description" rows="2"
                 class="mt-1 w-full px-4 py-2 rounded-lg border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"></textarea>
         </label>
         <label class="mt-2"><strong>Ingredient</strong>
-            <input formControlName="ingredient1"  type="text"
+            <input [formField]="addRecipeForm.ingredient1" type="text"
                 class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
         </label>
         <label class="mt-2"><strong>Ingredient</strong>
-            <input formControlName="ingredient2"  type="text"
+            <input [formField]="addRecipeForm.ingredient2" type="text"
                 class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
         </label>
         <label class="mt-2"><strong>Ingredient</strong>
-            <input formControlName="ingredient3"  type="text"
+            <input [formField]="addRecipeForm.ingredient3" type="text"
                 class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
         </label>
         <label class="mt-2"><strong>Ingredient</strong>
-            <input formControlName="ingredient4"  type="text"
+            <input [formField]="addRecipeForm.ingredient4" type="text"
                 class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
         </label>
         <label class="mt-2"><strong>Ingredient</strong>
-            <input formControlName="ingredient5" type="text"
+            <input [formField]="addRecipeForm.ingredient5" type="text"
                 class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
         </label>
 
-        <button
-        class="mt-4 w-full"
-              type="submit"
-
-            mat-flat-button 
-            color="primary"
-            [disabled]="addRecipeForm.invalid"
-            >Send</button>
+        <button class="mt-4 w-full" type="submit" mat-flat-button color="primary"
+            [disabled]="addRecipeForm().invalid()">Send</button>
     </div>
 </form>

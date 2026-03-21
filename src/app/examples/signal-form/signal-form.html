@@ -1,0 +1,7 @@
+<form>
+    <!-- 2. Bind using the [formField] directive -->
+    <input [formField]="signupForm.email" placeholder="Email">
+
+    <!-- 3. Access status by calling the field as a function -->
+    <button [disabled]="signupForm.email().invalid()">Sign Up</button>
+</form>
