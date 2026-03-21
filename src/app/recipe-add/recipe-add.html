@@ -1,21 +1,45 @@
 <form class="flex flex-col justify-start" (submit)="save();$event.preventDefault()">
     <div class="grid">
         <label class="mt-2"><strong>Name</strong>
-            <input [formField]="addRecipeForm.name"type="text"
+            <input [formField]="addRecipeForm.name" type="text"
                 class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
         </label>
-           <label class="mt-2"><strong>Email</strong>
-            <input [formField]="addRecipeForm.authorEmail"type="text"
+        @if (addRecipeForm.name().touched() && addRecipeForm.name().invalid()) {
+        <div class="error-list">
+            @for (error of addRecipeForm.name().errors(); track error.kind)
+            {<p class="text-red-500">{{ error.message }}</p>}
+        </div>
+        }
+        <label class="mt-2"><strong>Email</strong>
+            <input [formField]="addRecipeForm.authorEmail" type="text"
                 class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
         </label>
+        @if (addRecipeForm.authorEmail().touched() && addRecipeForm.authorEmail().invalid()) {
+        <div class="error-list">
+            @for (error of addRecipeForm.authorEmail().errors(); track error.kind)
+            {<p class="text-red-500">{{ error.message }}</p>}
+        </div>
+        }
         <label class="mt-2"><strong>Description</strong>
             <textarea [formField]="addRecipeForm.description" rows="2"
                 class="mt-1 w-full px-4 py-2 rounded-lg border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"></textarea>
         </label>
+        @if (addRecipeForm.description().touched() && addRecipeForm.description().invalid()) {
+        <div class="error-list">
+            @for (error of addRecipeForm.description().errors(); track error.kind)
+            {<p class="text-red-500">{{ error.message }}</p>}
+        </div>
+        }
         <label class="mt-2"><strong>Ingredient</strong>
             <input [formField]="addRecipeForm.ingredient1" type="text"
                 class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
         </label>
+        @if (addRecipeForm.ingredient1().touched() && addRecipeForm.ingredient1().invalid()) {
+        <div class="error-list">
+            @for (error of addRecipeForm.ingredient1().errors(); track error.kind)
+            {<p class="text-red-500">{{ error.message }}</p>}
+        </div>
+        }
         <label class="mt-2"><strong>Ingredient</strong>
             <input [formField]="addRecipeForm.ingredient2" type="text"
                 class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
