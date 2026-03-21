@@ -1,9 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
-import { form, required, email, FormField, submit } from '@angular/forms/signals';
+import { form, required, email, FormField, submit, minLength } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { Recipe } from '../recipe';
 import { Ingredient, RecipeModel } from '../models';
-import { P } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-recipe-add',
@@ -27,12 +26,12 @@ export class RecipeAdd {
   });
 
   protected readonly addRecipeForm = form(this.addRecipeModel, (path) => {
-    required(path.name);
+    required(path.name, { message: 'A name is required.'});
     required(path.authorEmail);
-    email(path.authorEmail);
-    required(path.description);
-    required(path.ingredient1);
-
+    email(path.authorEmail, {message: 'Please use a valid email, i.e. example@example.com'});
+    required(path.description, { message: 'A description is required.'});
+    minLength(path.description, 10);
+    required(path.ingredient1, { message: 'At least one ingredient is needed'});
   });
 
   protected async save(): Promise<void> {
