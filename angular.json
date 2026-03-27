@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "ai-tutor": {
+    "recipe-search-utility": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -57,10 +57,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ai-tutor:build:production"
+              "buildTarget": "recipe-search-utility:build:production"
             },
             "development": {
-              "buildTarget": "ai-tutor:build:development"
+              "buildTarget": "recipe-search-utility:build:development"
             }
           },
           "defaultConfiguration": "development"

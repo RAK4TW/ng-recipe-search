@@ -1,5 +1,5 @@
 {
-  "name": "ai-tutor",
+  "name": "recipe-search-utility",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
