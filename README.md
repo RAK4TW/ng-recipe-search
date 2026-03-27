@@ -1,4 +1,4 @@
-# Angular Recipe Search
+# Angular Recipe Search - A completed project from Gemini's AI module-by-module tutorial https://angular.dev/ai/ai-tutor
 
 A modern recipe search application built with Angular 21. This app allows users to browse, search, and manage their favorite recipes with a clean and responsive interface.
 
