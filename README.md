@@ -1,6 +1,21 @@
-# AiTutor
+# Angular Recipe Search
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.5.
+A modern recipe search application built with Angular 21. This app allows users to browse, search, and manage their favorite recipes with a clean and responsive interface.
+
+## Features
+
+- 🔍 **Search Recipes**: Find recipes by name with real-time filtering
+- ⭐ **Favorite Recipes**: Mark and view your favorite recipes
+- 📝 **Recipe Details**: View detailed recipe information including ingredients
+- ➕ **Add Recipes**: Add new recipes to your collection
+- 📱 **Responsive Design**: Works seamlessly on desktop and mobile devices
+
+## Tech Stack
+
+- **Angular 21** - Modern frontend framework
+- **TypeScript** - Type-safe JavaScript
+- **Tailwind CSS** - Utility-first CSS framework
+- **Angular Signals** - Reactive state management
 
 ## Development server
 
