@@ -22,7 +22,7 @@
         }
         <label class="mt-2"><strong>Description</strong>
             <textarea [formField]="addRecipeForm.description" rows="2"
-                class="mt-1 w-full px-4 py-2 rounded-lg border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"></textarea>
+                class="mt-1 w-full px-4 py-2 rounded-sm border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200"></textarea>
         </label>
         @if (addRecipeForm.description().touched() && addRecipeForm.description().invalid()) {
         <div class="error-list">
@@ -30,34 +30,75 @@
             {<p class="text-red-500">{{ error.message }}</p>}
         </div>
         }
-        <label class="mt-2"><strong>Ingredient</strong>
-            <input [formField]="addRecipeForm.ingredient1" type="text"
-                class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
-        </label>
-        @if (addRecipeForm.ingredient1().touched() && addRecipeForm.ingredient1().invalid()) {
-        <div class="error-list">
-            @for (error of addRecipeForm.ingredient1().errors(); track error.kind)
-            {<p class="text-red-500">{{ error.message }}</p>}
+        
+        <div class="mt-4 flex items-center gap-2">
+            <label class="text-sm font-semibold text-gray-800">Favorite Recipe:</label>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" [formField]="addRecipeForm.isFavorite" 
+                    class="sr-only peer h-2 w-4">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-500"></div>
+            </label>
         </div>
-        }
-        <label class="mt-2"><strong>Ingredient</strong>
-            <input [formField]="addRecipeForm.ingredient2" type="text"
-                class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
-        </label>
-        <label class="mt-2"><strong>Ingredient</strong>
-            <input [formField]="addRecipeForm.ingredient3" type="text"
-                class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
-        </label>
-        <label class="mt-2"><strong>Ingredient</strong>
-            <input [formField]="addRecipeForm.ingredient4" type="text"
-                class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
-        </label>
-        <label class="mt-2"><strong>Ingredient</strong>
-            <input [formField]="addRecipeForm.ingredient5" type="text"
-                class="mt-1 w-full px-4 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
-        </label>
 
-        <button class="mt-4 w-full" type="submit" mat-flat-button color="primary"
-            [disabled]="addRecipeForm().invalid()">Send</button>
+        <div class="mt-4">
+            <h3 class="text-lg font-semibold mb-4">Ingredients</h3>
+
+            @for (ingredient of addRecipeModel().ingredients; track $index; let index = $index) {
+            <div class="mt-4 p-4 border border-black rounded-lg">
+                <div class="flex justify-between items-center mb-2">
+                    <h4 class="font-semibold">Ingredient {{ index + 1 }}</h4>
+                    @if (canRemoveIngredient()) {
+                    <button type="button" (click)="removeIngredient(index)"
+                        class="cursor-pointer px-3 py-1 bg-yellow-400 text-black rounded-full text-sm hover:bg-yellow-300 transition-colors duration-200">
+                        Remove
+                    </button>
+                    }
+                </div>
+                <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-5 md:col-span-3">
+                        <label><strong>Name</strong>
+                            <input [formField]="addRecipeForm.ingredients[index].name" type="text"
+                                class="mt-1 w-full px-3 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200">
+                        </label>
+                    </div>
+                    <div class="col-span-2 md:col-span-1">
+                        <label><strong>Quantity</strong>
+                            <input [formField]="addRecipeForm.ingredients[index].quantity" type="number"
+                                class="mt-1 w-full px-3 py-2 rounded-full border border-red-500 bg-white text-black placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200 cursor-pointer">
+                        </label>
+                    </div>
+                    <div class="col-span-3 md:col-span-1">
+                        <label><strong>Unit</strong>
+                            <select [formField]="addRecipeForm.ingredients[index].unit"
+                                class="mt-1 w-full px-3 py-2 rounded-full border border-red-500 bg-white text-black focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all duration-200 cursor-pointer">
+                                @for (unit of units; track unit) {
+                                <option [value]="unit">{{ unit }}</option>
+                                }
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                @if (addRecipeForm.ingredients[index].name().touched() &&
+                addRecipeForm.ingredients[index].name().invalid()) {
+                <div class="error-list">
+                    @for (error of addRecipeForm.ingredients[index].name().errors(); track error.kind)
+                    {<p class="text-red-500">{{ error.message }}</p>}
+                </div>
+                }
+            </div>
+            }
+
+            @if (canAddMoreIngredients()) {
+            <div class="mt-4">
+                <button type="button" (click)="addIngredient()"
+                    class="cursor-pointer px-6 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors duration-200">
+                    Add Ingredient ({{ addRecipeModel().ingredients.length }}/7)
+                </button>
+            </div>
+            }
+
+            <button class="mt-4 w-full" type="submit" mat-flat-button color="primary"
+                [disabled]="addRecipeForm().invalid()">Send</button>
+        </div>
     </div>
 </form>

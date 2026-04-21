@@ -51,6 +51,13 @@ export class RecipeDetail {
     this.servings.update(s => s + 1)
   }
 
+  protected toggleFavorite(): void {
+    const recipe = this.recipe();
+    if (recipe) {
+      this.recipesService.toggleFavorite(recipe.id);
+    }
+  }
+
   protected prevRecipe(): void {
     const id = this.prevId();
     if (id !== null) {

@@ -3,6 +3,7 @@ import { form, required, email, FormField, submit, minLength } from '@angular/fo
 import { MatButtonModule } from '@angular/material/button';
 import { Recipe } from '../recipe';
 import { Ingredient, RecipeModel } from '../models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-add',
@@ -14,15 +15,18 @@ import { Ingredient, RecipeModel } from '../models';
 export class RecipeAdd {
 
   protected recipesService = inject(Recipe);
+  protected router = inject(Router);
+  protected readonly units = ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'each', 'cloves', 'sprigs', 'bunch', 'sheets', 'baguette', 'head'];
+  
   protected readonly addRecipeModel = signal({
     name: '',
     authorEmail: '',
     description: '',
-    ingredient1: '',
-    ingredient2: '',
-    ingredient3: '',
-    ingredient4: '',
-    ingredient5: ''
+    isFavorite: false,
+    ingredients: [
+      { name: '', quantity: 1, unit: 'g' },
+      { name: '', quantity: 1, unit: 'g' }
+    ]
   });
 
   protected readonly addRecipeForm = form(this.addRecipeModel, (path) => {
@@ -31,20 +35,47 @@ export class RecipeAdd {
     email(path.authorEmail, {message: 'Please use a valid email, i.e. example@example.com'});
     required(path.description, { message: 'A description is required.'});
     minLength(path.description, 10);
-    required(path.ingredient1, { message: 'At least one ingredient is needed'});
   });
+
+  protected addIngredient(): void {
+    const currentIngredients = this.addRecipeModel().ingredients;
+    if (currentIngredients.length < 7) {
+      this.addRecipeModel.update(model => ({
+        ...model,
+        ingredients: [...model.ingredients, { name: '', quantity: 0, unit: 'g' }]
+      }));
+    }
+  }
+
+  protected removeIngredient(index: number): void {
+    const currentIngredients = this.addRecipeModel().ingredients;
+    if (currentIngredients.length > 2) {
+      this.addRecipeModel.update(model => ({
+        ...model,
+        ingredients: model.ingredients.filter((_, i) => i !== index)
+      }));
+    }
+  }
+
+  protected canAddMoreIngredients(): boolean {
+    return this.addRecipeModel().ingredients.length < 7;
+  }
+
+  protected canRemoveIngredient(): boolean {
+    return this.addRecipeModel().ingredients.length > 2;
+  }
 
   protected async save(): Promise<void> {
     await submit(this.addRecipeForm, async () => {
 
       const formValue = this.addRecipeModel();
-      const ingredients: Ingredient[] = [
-        formValue.ingredient1,
-        formValue.ingredient2,
-        formValue.ingredient3,
-        formValue.ingredient4,
-        formValue.ingredient5
-      ].filter(name => name.trim() !== '').map(name => ({ name, quantity: 1, unit: 'pcs' }));
+      const ingredients: Ingredient[] = formValue.ingredients
+        .filter(ing => ing.name.trim() !== '')
+        .map(ing => ({
+          name: ing.name.trim(),
+          quantity: ing.quantity || 1,
+          unit: ing.unit
+        }));
 
       const newRecipe: RecipeModel = {
         id: Date.now(),
@@ -62,13 +93,13 @@ export class RecipeAdd {
         name: '',
         authorEmail: '',
         description: '',
-        ingredient1: '',
-        ingredient2: '',
-        ingredient3: '',
-        ingredient4: '',
-        ingredient5: ''
-      }
-      )
+        isFavorite: false,
+        ingredients: [
+          { name: '', quantity: 1, unit: 'g' },
+          { name: '', quantity: 1, unit: 'g' }
+        ]
+      });
+      this.router.navigate(['/recipes']);
     })
   }
 }
