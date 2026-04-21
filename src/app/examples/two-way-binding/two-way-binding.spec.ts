@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TwoWayBinding } from './two-way-binding';
+import { NameTag } from './two-way-binding';
 
-describe('TwoWayBinding', () => {
-  let component: TwoWayBinding;
-  let fixture: ComponentFixture<TwoWayBinding>;
+describe('NameTag', () => {
+  let component: NameTag;
+  let fixture: ComponentFixture<NameTag>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TwoWayBinding]
+      imports: [NameTag]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TwoWayBinding);
+    fixture = TestBed.createComponent(NameTag);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

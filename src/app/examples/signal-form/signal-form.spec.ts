@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignalForm } from './signal-form';
+import { Newsletter } from './signal-form';
 
-describe('SignalForm', () => {
-  let component: SignalForm;
-  let fixture: ComponentFixture<SignalForm>;
+describe('Newsletter', () => {
+  let component: Newsletter;
+  let fixture: ComponentFixture<Newsletter>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SignalForm]
+      imports: [Newsletter]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SignalForm);
+    fixture = TestBed.createComponent(Newsletter);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
