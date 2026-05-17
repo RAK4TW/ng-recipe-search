@@ -31,7 +31,9 @@ Commands should be run from the project root.
     - `models.ts`: Shared TypeScript interfaces and types.
     - `mock-recipes.ts`: Static mock data for development.
     - `recipe-list/`: Component for displaying and navigating the list of recipes.
-    - `recipe-detail/`: (Planned/In Progress) Component for displaying detailed recipe information and scaling servings.
+    - `recipe-detail/`: Component for displaying detailed recipe information and scaling servings.
+    - `recipe-add/`: Component for adding new recipes using Signal-based forms.
+    - `examples/`: Reference implementations for Auth, Forms, and State Management.
 - `src/styles.css`: Global styles (includes Tailwind imports).
 
 ## Development Conventions
@@ -48,7 +50,11 @@ Commands should be run from the project root.
 
 ## AI Tutor Context
 
-This project is part of a guided tutorial.
-- **Current Phase**: Phase 3: Component Architecture
-- **Current Module**: Module 9: Component Inputs with Signals
-- **Current Goal**: Refactoring `RecipeList` into a parent-child relationship with `RecipeDetail`.
+This project was developed as part of a guided tutorial for Mastering Modern Angular.
+- **Current Status**: All Phases & Modules Completed.
+- **Core Features Implemented**:
+    - Signal-based state management and derived state (`computed`).
+    - Component routing with parameter mapping.
+    - Dynamic serving scaling with Signals.
+    - New recipe creation using experimental Signal Forms (`@angular/forms/signals`).
+    - Comprehensive example gallery for advanced patterns.
